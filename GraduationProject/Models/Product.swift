@@ -7,9 +7,16 @@
 
 import Foundation
 
-struct Product {
-    var id: Int
+struct Product: Codable {
+    var id: String
     var productName: String
-    var productPrice: Double
-    var productImage: String
+    var productPrice: String
+    var productImageName: String
+    
+    enum CodingKeys: String, CodingKey {
+            case id = "yemek_id"
+            case productName = "yemek_adi"
+            case productPrice = "yemek_fiyat"
+            case productImageName = "yemek_resim_adi"
+        }
 }

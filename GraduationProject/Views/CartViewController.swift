@@ -13,15 +13,31 @@ class CartViewController: UIViewController {
     @IBOutlet var deliveryFeeLabel: UILabel!
     @IBOutlet var totalLabel: UILabel!
     
-    let productList: [Product] = [
-    Product(id: 1, productName: "Fanta", productPrice: 2.25, productImage: "fanta.png"),
-    Product(id: 2, productName: "Ayran", productPrice: 1.25, productImage: "ayran.png")]
+    var viewModel = CartViewModel()
+    var productList = [Product]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         cartTableView.dataSource = self
         cartTableView.delegate = self
+        
+        
+        
+        _ = viewModel.productList.subscribe(onNext: { products in
+            self.productList = products
+            DispatchQueue.main.async {
+                self.cartTableView.reloadData()
+            }
+        })
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        viewModel.fetchProducts()
+    }
+    
+    override func viewIsAppearing(_ animated: Bool) {
+        viewModel.loadCart(username: "akn")
     }
 
     @IBAction func adressEditButtonTapped(_ sender: Any) {
@@ -40,9 +56,13 @@ extension CartViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cartCell", for: indexPath) as! CartTableViewCell
         let product = productList[indexPath.row]
         
-        cell.productImageView.image = UIImage(named: product.productImage)
+        if let url = URL(string: "http://kasimadalan.pe.hu/yemekler/resimler/\(product.productImageName)"){
+            DispatchQueue.main.async {
+                cell.productImageView.kf.setImage(with: url)
+            }
+        }
         cell.productNameLabel.text = product.productName
-        cell.productPriceLabel.text = "$\(product.productPrice)"
+        cell.productPriceLabel.text = "₺\(product.productPrice)"
         
         return cell
     }

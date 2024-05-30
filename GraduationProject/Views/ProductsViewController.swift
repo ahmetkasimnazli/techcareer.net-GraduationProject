@@ -9,22 +9,25 @@ import UIKit
 
 class ProductsViewController: UIViewController {
     @IBOutlet var productsCollectionView: UICollectionView!
-    let productList: [Product] = [
-    Product(id: 1, productName: "Fanta", productPrice: 2.25, productImage: "fanta.png"),
-    Product(id: 2, productName: "Ayran", productPrice: 1.25, productImage: "ayran.png"),
-    Product(id: 3, productName: "Fanta", productPrice: 2.25, productImage: "fanta.png"),
-    Product(id: 4, productName: "Fanta", productPrice: 2.25, productImage: "fanta.png"),
-    Product(id: 5, productName: "Fanta", productPrice: 2.25, productImage: "fanta.png"),
-    Product(id: 6, productName: "Fanta", productPrice: 2.25, productImage: "fanta.png"),
-    Product(id: 7, productName: "Fanta", productPrice: 2.25, productImage: "fanta.png"),
-    Product(id: 8, productName: "Fanta", productPrice: 2.25, productImage: "fanta.png"),
-    Product(id: 9, productName: "Fanta", productPrice: 2.25, productImage: "fanta.png")]
+    var productList = [Product]()
+    var viewModel = ProductsViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         productsCollectionView.dataSource = self
         productsCollectionView.delegate = self
         configureCollectionViewDesign()
+        
+        _ = viewModel.productList.subscribe(onNext: { products in
+            self.productList = products
+            DispatchQueue.main.async {
+                self.productsCollectionView.reloadData()
+            }
+        })
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        viewModel.fetchProducts()
     }
     
     func configureCollectionViewDesign() {
@@ -71,9 +74,13 @@ extension ProductsViewController: UICollectionViewDelegate, UICollectionViewData
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "productCell", for: indexPath) as! ProductsCollectionViewCell
         let product = productList[indexPath.row]
         
+        if let url = URL(string: "http://kasimadalan.pe.hu/yemekler/resimler/\(product.productImageName)"){
+                DispatchQueue.main.async {
+                    cell.productImage.kf.setImage(with: url)
+                }
+            }
         cell.productNameLabel.text = product.productName
-        cell.productImage.image = UIImage(named: product.productImage)
-        cell.productPriceLabel.text = "\(product.productPrice)$"
+        cell.productPriceLabel.text = "₺\(product.productPrice)"
         
         cell.layer.cornerRadius = 15.0
         cell.layer.masksToBounds = false
@@ -99,7 +106,5 @@ extension ProductsViewController: UICollectionViewDelegate, UICollectionViewData
             }
         }
     }
-    
-    
 }
 

@@ -19,17 +19,22 @@ class ProductDetailViewController: UIViewController {
     var isAddToFavoriteButtonActive: Bool = false
     
     var product: Product?
+    var viewModel = ProductDetailViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
     }
     
-
     func configureUI() {
         if let product = product {
-            productImageView.image = UIImage(named: product.productImage)
+            if let url = URL(string: "http://kasimadalan.pe.hu/yemekler/resimler/\(product.productImageName)"){
+                    DispatchQueue.main.async {
+                        self.productImageView.kf.setImage(with: url)
+                    }
+                }
             productNameLabel.text = product.productName
+            productPriceLabel.text = "₺\(product.productPrice)"
             unitStepperLabel.text = String(Int(unitStepper.value))
         }
     }
@@ -46,6 +51,10 @@ class ProductDetailViewController: UIViewController {
     }
     
     @IBAction func addToCartButtonTapped(_ sender: Any) {
+        guard let product = product else {
+            print("DEBUG: 1")
+            return}
+        viewModel.addProductToCart(productName: product.productName, productPrice: Int(product.productPrice)! , productAmount: Int(unitStepper.value), username: "akn")
         
     }
     @IBAction func unitStepperTapped(_ sender: Any) {
