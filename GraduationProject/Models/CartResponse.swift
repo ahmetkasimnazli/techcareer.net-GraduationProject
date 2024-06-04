@@ -8,6 +8,11 @@
 import Foundation
 
 struct CartResponse: Codable {
-    var products: [Product]?
+    var products: [CartProduct]?
     var success: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case products = "sepet_yemekler"
+        case success = "success"
+    }
 }

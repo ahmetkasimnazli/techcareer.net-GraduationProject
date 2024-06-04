@@ -9,17 +9,22 @@ import UIKit
 
 class ProductsViewController: UIViewController {
     @IBOutlet var productsCollectionView: UICollectionView!
+    @IBOutlet var searchBar: UISearchBar!
+
     var productList = [Product]()
+    var filteredProductList = [Product]()
     var viewModel = ProductsViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         productsCollectionView.dataSource = self
         productsCollectionView.delegate = self
+        searchBar.delegate = self
         configureCollectionViewDesign()
         
         _ = viewModel.productList.subscribe(onNext: { products in
             self.productList = products
+            self.filteredProductList = products
             DispatchQueue.main.async {
                 self.productsCollectionView.reloadData()
             }
@@ -42,17 +47,17 @@ class ProductsViewController: UIViewController {
         let itemWidth = (screenWidth - 72) / 2
         
         design.itemSize = CGSize(width: itemWidth, height: itemWidth * 1.1)
-        
+
         productsCollectionView.collectionViewLayout = design
     }
 
     @IBAction func orderButtonTapped(_ sender: Any) {
         let alertController = UIAlertController(title: "Listing order", message: "Select a listing option!", preferredStyle: .actionSheet)
         let priceAscAction = UIAlertAction(title: "Price - Ascending", style: .default) { _ in
-            print("Price - Asc button tapped!")
+            self.viewModel.sortProductsByPriceAscending()
         }
         let priceDescAction = UIAlertAction(title: "Price - Descending", style: .default) { _ in
-            print("Price - Desc button tapped!")
+            self.viewModel.sortProductsByPriceDescending()
         }
         alertController.addAction(priceAscAction)
         alertController.addAction(priceDescAction)
@@ -65,15 +70,33 @@ class ProductsViewController: UIViewController {
     }
 }
 
-extension ProductsViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension ProductsViewController: UICollectionViewDelegate, UICollectionViewDataSource, CellProtocol, UISearchBarDelegate {
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+                    filteredProductList = productList
+                } else {
+                    filteredProductList = productList.filter { product in
+                        product.productName.lowercased().contains(searchText.lowercased())
+                    }
+                }
+                productsCollectionView.reloadData()
+    }
+
+    func addToCartTapped(indexPath: IndexPath) {
+        let product = filteredProductList[indexPath.row]
+        viewModel.addProductToCart(productName: product.productName, productImageName: product.productImageName, productPrice: Int(product.productPrice)!, productAmount: 1, username: "akn")
+        debugPrint("\(product.productName) added to the cart!")
+    }
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return productList.count
+        return filteredProductList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "productCell", for: indexPath) as! ProductsCollectionViewCell
-        let product = productList[indexPath.row]
-        
+        let product = filteredProductList[indexPath.row]
+
         if let url = URL(string: "http://kasimadalan.pe.hu/yemekler/resimler/\(product.productImageName)"){
                 DispatchQueue.main.async {
                     cell.productImage.kf.setImage(with: url)
@@ -81,7 +104,10 @@ extension ProductsViewController: UICollectionViewDelegate, UICollectionViewData
             }
         cell.productNameLabel.text = product.productName
         cell.productPriceLabel.text = "₺\(product.productPrice)"
-        
+
+        cell.cellProtocol = self
+        cell.indexPath = indexPath
+
         cell.layer.cornerRadius = 15.0
         cell.layer.masksToBounds = false
         cell.layer.shadowColor = UIColor.black.cgColor
@@ -94,7 +120,7 @@ extension ProductsViewController: UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let product = productList[indexPath.row]
+        let product = filteredProductList[indexPath.row]
         performSegue(withIdentifier: "toDetail", sender: product)
     }
     

@@ -20,7 +20,8 @@ class ProductDetailViewController: UIViewController {
     
     var product: Product?
     var viewModel = ProductDetailViewModel()
-    
+    var favoriteViewModel = FavoriteProductsViewModel()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
@@ -36,25 +37,33 @@ class ProductDetailViewController: UIViewController {
             productNameLabel.text = product.productName
             productPriceLabel.text = "₺\(product.productPrice)"
             unitStepperLabel.text = String(Int(unitStepper.value))
+
+            isAddToFavoriteButtonActive = favoriteViewModel.isFavorite(product: product)
+                        updateFavoriteButton()
         }
     }
     
     @IBAction func addToFavoriteButtonTapped(_ sender: Any) {
-        if isAddToFavoriteButtonActive {
-            isAddToFavoriteButtonActive.toggle()
-            addToFavoriteButton.tintColor = .lightGray
-        }
-        else {
-            isAddToFavoriteButtonActive.toggle()
-            addToFavoriteButton.tintColor = UIColor(named: "mainColor")
-        }
+        guard let product = product else { return }
+                if isAddToFavoriteButtonActive {
+                    favoriteViewModel.removeFavorite(product: product)
+                } else {
+                    favoriteViewModel.addFavorite(product: product)
+                }
+                isAddToFavoriteButtonActive.toggle()
+                updateFavoriteButton()
     }
     
+    func updateFavoriteButton() {
+        let buttonColor = isAddToFavoriteButtonActive ? UIColor(named: "mainColor") : .lightGray
+        addToFavoriteButton.tintColor = buttonColor
+    }
+
     @IBAction func addToCartButtonTapped(_ sender: Any) {
         guard let product = product else {
             print("DEBUG: 1")
             return}
-        viewModel.addProductToCart(productName: product.productName, productPrice: Int(product.productPrice)! , productAmount: Int(unitStepper.value), username: "akn")
+        viewModel.addProductToCart(productName: product.productName, productImageName: product.productImageName, productPrice: Int(product.productPrice)! , productAmount: Int(unitStepper.value), username: "akn")
         
     }
     @IBAction func unitStepperTapped(_ sender: Any) {

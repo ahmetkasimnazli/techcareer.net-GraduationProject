@@ -12,6 +12,7 @@
 		5F10A4522C05CA55006CF466 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F10A4512C05CA55006CF466 /* CartViewController.swift */; };
 		5F10A4552C05CD60006CF466 /* CartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F10A4542C05CD60006CF466 /* CartTableViewCell.swift */; };
 		5F10A4572C064A69006CF466 /* FavoritesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F10A4562C064A69006CF466 /* FavoritesTableViewCell.swift */; };
+		5F1973862C0B1E2E00CF7139 /* CartProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1973852C0B1E2E00CF7139 /* CartProduct.swift */; };
 		5F4274D92BFF672F001BC6BD /* ProductsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4274D82BFF672F001BC6BD /* ProductsCollectionViewCell.swift */; };
 		5F4274DC2BFF6C04001BC6BD /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4274DB2BFF6C04001BC6BD /* Product.swift */; };
 		5F4274DE2BFF8545001BC6BD /* ProductDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4274DD2BFF8545001BC6BD /* ProductDetailViewController.swift */; };
@@ -39,6 +40,7 @@
 		5F10A4512C05CA55006CF466 /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
 		5F10A4542C05CD60006CF466 /* CartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartTableViewCell.swift; sourceTree = "<group>"; };
 		5F10A4562C064A69006CF466 /* FavoritesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesTableViewCell.swift; sourceTree = "<group>"; };
+		5F1973852C0B1E2E00CF7139 /* CartProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartProduct.swift; sourceTree = "<group>"; };
 		5F4274D82BFF672F001BC6BD /* ProductsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsCollectionViewCell.swift; sourceTree = "<group>"; };
 		5F4274DB2BFF6C04001BC6BD /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		5F4274DD2BFF8545001BC6BD /* ProductDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailViewController.swift; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 				5FAB6CF92C088A240012B646 /* ProductsResponse.swift */,
 				5FAB6CFE2C08D4D60012B646 /* CRUDResponse.swift */,
 				5FAB6D002C08D9DE0012B646 /* CartResponse.swift */,
+				5F1973852C0B1E2E00CF7139 /* CartProduct.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -161,26 +164,18 @@
 		5F5375AF2BFF25A000FAF0D8 /* GraduationProject */ = {
 			isa = PBXGroup;
 			children = (
-				5FAB6D022C08DE230012B646 /* Extensions */,
 				5F4274DA2BFF6BF6001BC6BD /* Models */,
-				5F4274D72BFF6716001BC6BD /* CollectionView */,
-				5F10A4532C05CD38006CF466 /* TableView */,
 				5F4274D42BFF4DC5001BC6BD /* Service */,
 				5F4274D32BFF4DB7001BC6BD /* ViewModels */,
 				5F4274D22BFF4DAA001BC6BD /* Views */,
+				5F4274D72BFF6716001BC6BD /* CollectionView */,
+				5F10A4532C05CD38006CF466 /* TableView */,
 				5F4274D52BFF4DE9001BC6BD /* App */,
 				5F5375B92BFF25A100FAF0D8 /* Assets.xcassets */,
 				5F10A44D2C051705006CF466 /* NunitoSans-VariableFont_YTLC,opsz,wdth,wght.ttf */,
 				5F5375BE2BFF25A100FAF0D8 /* Info.plist */,
 			);
 			path = GraduationProject;
-			sourceTree = "<group>";
-		};
-		5FAB6D022C08DE230012B646 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -263,6 +258,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F1973862C0B1E2E00CF7139 /* CartProduct.swift in Sources */,
 				5F5375B52BFF25A000FAF0D8 /* ProductsViewController.swift in Sources */,
 				5FAB6CED2C0883E60012B646 /* ProductsViewModel.swift in Sources */,
 				5FAB6CF32C0884420012B646 /* CartViewModel.swift in Sources */,

@@ -1,26 +1,26 @@
-//
-//  CartViewModel.swift
-//  GraduationProject
-//
-//  Created by Ahmet Kasım Nazlı on 30.05.2024.
-//
-
 import Foundation
 import RxSwift
 
 class CartViewModel {
     var productService = ProductService()
-    var productList = BehaviorSubject<[Product]>(value: [Product]())
-    
+    var cartList = BehaviorSubject<[CartProduct]>(value: [CartProduct]())
+
     init() {
-        productList = productService.productList
-    }
-    func fetchProducts(){
-        productService.fetchProducts()
-    }
-    
-    func loadCart(username: String){
-        productService.loadCart(username: username)
+        cartList = productService.cartList
     }
 
+    func delete(id: Int, username: String, completion: @escaping (Bool) -> Void) {
+        productService.delete(id: id, username: username) { success in
+            if success {
+                self.fetchCart(username: "akn")
+                completion(true)
+            } else {
+                completion(false)
+            }
+        }
+    }
+
+    func fetchCart(username: String) {
+        productService.fetchCart(username: username)
+    }
 }

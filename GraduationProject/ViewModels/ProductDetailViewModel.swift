@@ -11,7 +11,7 @@ import RxSwift
 class ProductDetailViewModel {
     var productService = ProductService()
     
-    func addProductToCart(productName: String, productPrice: Int, productAmount: Int, username: String ) {
-        productService.addProductToCart(productName: productName, productPrice: productPrice, productAmount: productAmount, username: username)
+    func addProductToCart(productName: String, productImageName: String, productPrice: Int, productAmount: Int, username: String ) {
+        productService.addProductToCart(productName: productName, productImageName: productImageName, productPrice: productPrice, productAmount: productAmount, username: username)
     }
 }

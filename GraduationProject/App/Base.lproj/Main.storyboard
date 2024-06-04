@@ -21,9 +21,6 @@
                             <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search for a product" translatesAutoresizingMaskIntoConstraints="NO" id="NWU-Ju-NpJ">
                                 <rect key="frame" x="16" y="155" width="361" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="vjn-aX-I5f"/>
-                                </connections>
                             </searchBar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Products" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ynX-vy-iHB">
                                 <rect key="frame" x="25.999999999999993" y="211" width="80.333333333333314" height="27.333333333333343"/>
@@ -71,6 +68,9 @@
                                                         </preferredSymbolConfiguration>
                                                         <color key="baseBackgroundColor" name="mainColor"/>
                                                     </buttonConfiguration>
+                                                    <connections>
+                                                        <action selector="addToCartButtonTapped:" destination="4eF-So-3Br" eventType="touchUpInside" id="7qg-0F-RN4"/>
+                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fanta" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m6Q-V4-hJs">
                                                     <rect key="frame" x="16" y="117" width="38" height="20.666666666666657"/>
@@ -157,6 +157,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="productsCollectionView" destination="t90-M2-YJ8" id="fS8-qg-j5M"/>
+                        <outlet property="searchBar" destination="NWU-Ju-NpJ" id="8iA-FA-jyp"/>
                         <segue destination="H3G-40-PRi" kind="show" identifier="toDetail" id="KpT-bj-pcs"/>
                     </connections>
                 </viewController>
@@ -193,19 +194,19 @@
                                                     </constraints>
                                                 </imageView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="LB8-h1-q42">
-                                                    <rect key="frame" x="97.666666666666671" y="21.999999999999996" width="220.66666666666663" height="63.666666666666657"/>
+                                                    <rect key="frame" x="97.666666666666671" y="21.999999999999996" width="223.33333333333331" height="63.666666666666657"/>
                                                     <subviews>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="114" translatesAutoresizingMaskIntoConstraints="NO" id="LIi-wj-bqg">
-                                                            <rect key="frame" x="0.0" y="0.0" width="220.66666666666666" height="27.333333333333332"/>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LIi-wj-bqg">
+                                                            <rect key="frame" x="0.0" y="0.0" width="223.33333333333334" height="27.333333333333332"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ayran" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ImV-p4-UVc">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="53.666666666666664" height="27.333333333333332"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="170.33333333333334" height="27.333333333333332"/>
                                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="20"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$2.25" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V0M-hz-szi">
-                                                                    <rect key="frame" x="167.66666666666663" y="0.0" width="53" height="27.333333333333332"/>
+                                                                    <rect key="frame" x="170.33333333333331" y="0.0" width="53" height="27.333333333333332"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="53" id="mp5-Uh-OBu"/>
                                                                     </constraints>
@@ -215,8 +216,8 @@
                                                                 </label>
                                                             </subviews>
                                                         </stackView>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="114" translatesAutoresizingMaskIntoConstraints="NO" id="KmX-hM-Qv0">
-                                                            <rect key="frame" x="0.0" y="36.333333333333336" width="220.66666666666666" height="27.333333333333336"/>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KmX-hM-Qv0">
+                                                            <rect key="frame" x="0.0" y="36.333333333333336" width="223.33333333333334" height="27.333333333333336"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="x2" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XOi-0L-Uvt">
                                                                     <rect key="frame" x="0.0" y="0.0" width="21.333333333333332" height="27.333333333333332"/>
@@ -228,7 +229,7 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$4.5" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xY2-R8-Cse">
-                                                                    <rect key="frame" x="135.33333333333331" y="0.0" width="85.333333333333314" height="27.333333333333332"/>
+                                                                    <rect key="frame" x="21.333333333333329" y="0.0" width="202" height="27.333333333333332"/>
                                                                     <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -247,7 +248,7 @@
                                                 <constraint firstItem="LB8-h1-q42" firstAttribute="leading" secondItem="NO7-ZX-dSs" secondAttribute="trailing" constant="7.6699999999999999" id="GHd-Vy-RSB"/>
                                                 <constraint firstItem="NO7-ZX-dSs" firstAttribute="leading" secondItem="xfs-Hg-YmD" secondAttribute="leading" id="Wq8-xQ-ofr"/>
                                                 <constraint firstItem="NO7-ZX-dSs" firstAttribute="top" secondItem="xfs-Hg-YmD" secondAttribute="top" constant="11" id="r1O-c5-4ab"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="LB8-h1-q42" secondAttribute="trailing" constant="2.6699999999999999" id="s1o-XM-ohF"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="LB8-h1-q42" secondAttribute="trailing" id="s1o-XM-ohF"/>
                                                 <constraint firstAttribute="bottom" secondItem="NO7-ZX-dSs" secondAttribute="bottom" constant="11" id="tA1-hh-6A6"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -315,7 +316,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$10" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="The-g9-L2b">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="₺10" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="The-g9-L2b">
                                                 <rect key="frame" x="312.66666666666669" y="0.0" width="28.333333333333314" height="20.333333333333332"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
@@ -604,7 +605,7 @@
                             <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
                         </textAttributes>
                         <textAttributes key="largeTitleTextAttributes">
-                            <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="30"/>
+                            <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="30"/>
                         </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
